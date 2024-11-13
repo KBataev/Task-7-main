@@ -53,4 +53,9 @@ public class PersonDetails implements UserDetails {
         //акк работает
         return true;
     }
+
+
+    public Person getPerson() {
+        return this.person;
+    }
 }
