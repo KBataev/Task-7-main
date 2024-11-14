@@ -3,15 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
+    <style>
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+        }
+    </style>
 </head>
 <body>
 
 <h2>Register</h2>
 
-<form th:action="@{/auth/register}" th:object="${person}" method="post">
+<form th:action="@{/auth/register}" th:object="${person}" th:method="POST">
     <div>
         <label for="username">Username:</label>
         <input type="text" id="username" th:field="*{userName}" required/>
+        <!-- Вывод ошибки для поля userName -->
+        <div th:if="${#fields.hasErrors('userName')}" class="error-message" th:errors="*{userName}"></div>
     </div>
     <div>
         <label for="password">Password:</label>

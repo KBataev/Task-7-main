@@ -66,14 +66,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //настраивает аутентификацию
         http
                 .authorizeRequests()
-                    .antMatchers( "/auth/login","/persons").permitAll()
+                    .antMatchers( "/auth/login","/persons","/auth/register","/error").permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
-    //                .loginPage("/login")
-//                    .loginProcessingUrl("/process_login")
+                    .loginPage("/auth/login")
+                    .loginProcessingUrl("/process_login")
                     .defaultSuccessUrl("/infoOneUser", true)
-                    .failureUrl("/login?error")
                     .permitAll()
                 .and()
                     .logout()
