@@ -14,7 +14,8 @@ public class HelloController {
     public String allPersons() {
         return "persons";
     }
-    @GetMapping("infoOneUser")
+
+    @GetMapping("/infoOneUser")
     public String infoOneUser(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();//помещаем в контекст данного пользователя
         PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();

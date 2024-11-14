@@ -7,12 +7,12 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import ru.itmentor.spring.boot_security.demo.security.AuthProviderImpl;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import ru.itmentor.spring.boot_security.demo.service.PersonDetailsService;
+
+import java.beans.BeanProperty;
 
 
 @Configuration
@@ -25,6 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        this.successUserHandler = successUserHandler;
 //    }
 //
+
 //    @Override
 //    protected void configure(HttpSecurity http) throws Exception {
 //        //настраивает аутентификацию
@@ -39,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .logout()
 //                .permitAll();
 //    }
-//
+
 //    // аутентификация inMemory
 //    @Bean
 //    @Override
@@ -53,14 +54,39 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //
 //        return new InMemoryUserDetailsManager(user);
 //    }
-    private final AuthProviderImpl authProvider;
+    private final PersonDetailsService personDetailsService;
 
     @Autowired
-    public WebSecurityConfig(AuthProviderImpl authProviderImpl){
-        this.authProvider = authProviderImpl;
+    public WebSecurityConfig(PersonDetailsService personDetailsService) {
+        this.personDetailsService = personDetailsService;
     }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        //настраивает аутентификацию
+        http
+                .authorizeRequests()
+                    .antMatchers( "/auth/login","/persons").permitAll()
+                    .anyRequest().authenticated()
+                .and()
+                    .formLogin()
+    //                .loginPage("/login")
+//                    .loginProcessingUrl("/process_login")
+                    .defaultSuccessUrl("/infoOneUser", true)
+                    .failureUrl("/login?error")
+                    .permitAll()
+                .and()
+                    .logout()
+                    .permitAll();
+    }
+
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-        auth.authenticationProvider(authProvider);
+        auth.userDetailsService(personDetailsService);
+    }
+
+    @Bean
+    public PasswordEncoder getPasswordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
     }
 }
