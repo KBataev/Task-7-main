@@ -14,7 +14,6 @@ import ru.itmentor.spring.boot_security.demo.service.PersonService;
 import ru.itmentor.spring.boot_security.demo.util.PersonValidator;
 
 import javax.validation.Valid;
-
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
@@ -22,29 +21,24 @@ public class AuthController {
     private final PersonValidator personValidator;
     private final PersonService personService;
 
-
     @Autowired
     public AuthController(PersonValidator personValidator, PersonService personService) {
         this.personValidator = personValidator;
         this.personService = personService;
     }
 
-
     @GetMapping("/login")
-    public String loginpPage() {
+    public String loginPage() {
         return "/auth/login";
     }
 
     @GetMapping("/register")
     public String registerPage(@ModelAttribute("person") Person person) {
-        System.out.println("fasfsaf");
         return "/auth/register";
     }
 
     @PostMapping("/register")
     public String register(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult) {
-
-        System.out.println("fasfdfasfasfasfsaf");
         personValidator.validate(person, bindingResult);
         if (bindingResult.hasErrors()) {
             return "/auth/register";
