@@ -1,12 +1,14 @@
 package ru.itmentor.spring.boot_security.demo.security;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.itmentor.spring.boot_security.demo.models.Person;
 
-import java.io.Serializable;
+
 import java.util.Collection;
-import java.util.List;
+import java.util.Collections;
+
 
 public class PersonDetails implements UserDetails {
     private final Person person;
@@ -16,7 +18,7 @@ public class PersonDetails implements UserDetails {
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return Collections.singletonList(new SimpleGrantedAuthority(person.getRole()));
     }
 
     @Override

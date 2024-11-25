@@ -29,6 +29,17 @@ public class Person {
     @Column(name = "age")
     private int age;
 
+    @Column(name = "role")
+    private String role;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public Person() {
     }
 
