@@ -5,6 +5,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import ru.itmentor.spring.boot_security.demo.models.Person;
 import ru.itmentor.spring.boot_security.demo.repositories.PeopleRepository;
+import ru.itmentor.spring.boot_security.demo.util.PersonNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +25,8 @@ public class AdminService {
     }
 
     public Optional<Person> findById(int id) {
-        return peopleRepository.findById(id);
+        Optional<Person> findPerson = peopleRepository.findById(id);
+        return Optional.ofNullable(findPerson.orElseThrow(PersonNotFoundException::new));
     }
 
     public void update(Person updatedPerson) {
