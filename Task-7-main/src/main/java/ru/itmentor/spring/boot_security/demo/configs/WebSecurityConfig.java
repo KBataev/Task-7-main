@@ -59,14 +59,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/auth/login")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID");
-//                .and()
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//                .logout()
-//                .logoutUrl("/logout")
-//                .logoutSuccessUrl("/auth/login") // Перенаправление после выхода
-//                .invalidateHttpSession(true)
-//                .deleteCookies("JSESSIONID");
     }
 
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

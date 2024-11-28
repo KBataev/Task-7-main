@@ -1,5 +1,6 @@
 package ru.itmentor.spring.boot_security.demo.RESTControllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,8 @@ import ru.itmentor.spring.boot_security.demo.service.AdminService;
 import ru.itmentor.spring.boot_security.demo.util.PersonErrorResponse;
 import ru.itmentor.spring.boot_security.demo.util.PersonNotFoundException;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
